@@ -1,9 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <iostream>
+#include <list>
 
 void BorderControl(const sf::RenderWindow& window);
 void Movement();
+
+
 
 int SIZE = 50; // 50
 
@@ -27,6 +30,22 @@ struct Food
 	int x, y;
 }food;
 
+void GenerateFood() {
+	bool validPosition = false;
+
+	while (!validPosition) {
+		food.x = rand() % 15;
+		food.y = rand() % 11;
+
+		validPosition = true;
+		for (int i = 0; i < num; i++) {
+			if (snake[i].x == food.x && snake[i].y == food.y) {
+				validPosition = false;
+				break;
+			}
+		}
+	}
+}
 void GameAction()
 {
 	for (int i = num; i > 0; i--)
@@ -129,9 +148,9 @@ int main()
 		window.clear();
 		if ((snake[0].x == food.x) && (snake[0].y == food.y))
 		{
+			
+			GenerateFood();
 			num++;
-			food.x = rand() % 15;
-			food.y = rand() % 11;
 		}
 		//std::cout << snake->x << " " << snake->y <<" " << foodPosition.x << " " << foodPosition.y << std::endl;
 		Movement();
