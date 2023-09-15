@@ -108,8 +108,6 @@ int main()
 	// set the text style
 	currentScore.setStyle(sf::Text::Bold | sf::Text::Underlined);
 	currentScore.setPosition(10, 600);
-	
-
 
 	while (window.isOpen())
 	{
@@ -160,8 +158,7 @@ int main()
 			if (snake[0].x == snake[i].x && snake[0].y == snake[i].y)
 			{
 				lastScore.setString("last score: " + std::to_string(num - 3));
-
-			num = 3;
+				num = 3;
 			}
 		}
 		
@@ -199,19 +196,19 @@ void BorderControl(const sf::RenderWindow& window) {
 
 void Movement()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && direction != 2)
 	{
 		direction = 1;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && direction != 1)
 	{
 		direction = 2;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && direction != 0)
 	{
 		direction = 3;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && direction != 3)
 	{
 		direction = 0;
 	}
