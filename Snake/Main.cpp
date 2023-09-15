@@ -5,11 +5,14 @@
 void BorderControl(const sf::RenderWindow& window);
 void Movement();
 
-int SIZE = 50;
-int vx = SIZE * SIZE;
-int vy = SIZE * 15;
-int horizontalLine = 38;
-int verticalLine = 21;
+int SIZE = 50; // 50
+
+int horizontalLine = 600 / SIZE;
+int verticalLine = 800 / SIZE;
+
+int vx = SIZE;
+int vy = SIZE;
+
 int direction = 2;
 int num = 3;
 
@@ -17,6 +20,7 @@ struct Snake
 {
 	int x, y;
 }snake[100];
+
 
 struct Food
 {
@@ -51,32 +55,61 @@ void GameAction()
 
 int main()
 {
+	std::cout << verticalLine;
 	sf::Clock clock;
 	float chrono = 0;
 	float delay = 1.1;
 	int x = 1;
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
-	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML shapes", sf::Style::Default, settings);
+	sf::RenderWindow window(sf::VideoMode(802, 670), "SFML shapes", sf::Style::Default, settings);
 	sf::Event event;
 
 	sf::RectangleShape snakeblock;
-	snakeblock.setSize(sf::Vector2f(SIZE, SIZE));
+	snakeblock.setSize(sf::Vector2f(SIZE-2, SIZE-2));
 	snakeblock.setFillColor(sf::Color::Green);
 	snakeblock.setOutlineColor(sf::Color::White);
 
 	sf::RectangleShape grid;
 	grid.setSize(sf::Vector2f(vx,vy));
 	grid.setFillColor(sf::Color::Black);
-	grid.setOutlineThickness(2);
+	grid.setOutlineThickness(1);
 	grid.setOutlineColor(sf::Color::White);
 
 	sf::RectangleShape blockFood;
-	blockFood.setSize(sf::Vector2f(SIZE, SIZE));
+	blockFood.setSize(sf::Vector2f(SIZE-2, SIZE-2));
 	blockFood.setFillColor(sf::Color::Red);
 
 	food.x = rand() % 15;
 	food.y = rand() % 11;
+
+	sf::Font font;
+	if (!font.loadFromFile("C:\\Users\\paul_\\source\\repos\\Snake\\Snake\\font\\Arial.ttf"))
+	{
+		std::cout << "eror";
+	}
+	sf::Text currentScore;
+	sf::Text lastScore;
+
+	// select the font
+	currentScore.setFont(font); // font is a sf::Font
+	lastScore.setFont(font);
+	lastScore.setPosition(600, 600);
+	// set the string to display
+	currentScore.setString("Score: ");
+	lastScore.setString("Last score: ");
+
+	// set the character size
+	currentScore.setCharacterSize(40); // in pixels, not points!
+
+	// set the color
+	currentScore.setFillColor(sf::Color::Blue);
+	currentScore.setCharacterSize(50);
+	// set the text style
+	currentScore.setStyle(sf::Text::Bold | sf::Text::Underlined);
+	currentScore.setPosition(10, 600);
+	
+
 
 	while (window.isOpen())
 	{
@@ -88,13 +121,13 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-
+		currentScore.setString("Score: " + std::to_string(num-3));
 		if (chrono > delay)
 		{
 			chrono = 1;
 			GameAction();
 		}
-		
+
 		window.clear();
 		if ((snake[0].x == food.x) && (snake[0].y == food.y))
 		{
@@ -109,9 +142,9 @@ int main()
 		BorderControl(window);
 
 		window.clear();
-		for (int i = 0; i < verticalLine; i++)
+		for (int i = 0; i < horizontalLine; i++)
 		{
-			for (int j = 0; j < horizontalLine; j++)
+			for (int j = 0; j < verticalLine; j++)
 			{
 				grid.setPosition(j * SIZE, i * SIZE);
 				window.draw(grid);
@@ -122,9 +155,20 @@ int main()
 			snakeblock.setPosition(snake[i].x * SIZE, snake[i].y * SIZE);
 			window.draw(snakeblock);
 		}
+		for (int i = 1; i < num; i++)
+		{
+			if (snake[0].x == snake[i].x && snake[0].y == snake[i].y)
+			{
+				lastScore.setString("last score: " + std::to_string(num - 3));
+
+			num = 3;
+			}
+		}
 		
-		blockFood.setPosition(food.x* SIZE, food.y * SIZE);
+		blockFood.setPosition(food.x * SIZE, food.y * SIZE);
 		window.draw(blockFood);
+		window.draw(currentScore);
+		window.draw(lastScore);
 		window.display();
 
 	}
@@ -151,8 +195,6 @@ void BorderControl(const sf::RenderWindow& window) {
 	if (snake->y < topBorder) {
 		snake->y = bottomBorder;
 	}
-
-	
 }
 
 void Movement()

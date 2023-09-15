@@ -49,3 +49,6 @@ x64/Debug.rar
 x64/Debug/Snake.pdb
 Snake/Snake.vcxproj.user
 Snake/Snake.vcxproj.filters
+.vs/Snake/v17/Browse.VC.db-shm
+.vs/Snake/v17/Browse.VC.db-wal
+.vs/Snake/v17/Browse.VC.opendb
