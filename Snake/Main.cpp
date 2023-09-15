@@ -62,7 +62,7 @@ int main()
 	int x = 1;
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
-	sf::RenderWindow window(sf::VideoMode(802, 670), "SFML shapes", sf::Style::Default, settings);
+	sf::RenderWindow window(sf::VideoMode(802, 670), "Retro Snake", sf::Style::Default, settings);
 	sf::Event event;
 
 	sf::RectangleShape snakeblock;
