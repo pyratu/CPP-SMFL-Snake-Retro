@@ -20,6 +20,9 @@ A simple implementation of the classic Snake game using SFML in C++.
 
 ## 🌟 Screenshots
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/pyratu/CPP-SMFL-Snake-Retro/main/Snake/img/img.png" alt="Your Image" />
+</p>
 
 ## 📜 License
 - This project is licensed under the MIT License.
